@@ -15,44 +15,7 @@ SMTP_USER     = os.getenv("SMTP_USER")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 DEST_EMAIL    = os.getenv("DEST_EMAIL")
 
-def envoyer_candidature(nom, prenom, email, poste, message, cv_bytes, cv_nom):
-    try:
-        msg = MIMEMultipart()
-        msg["From"]    = SMTP_USER
-        msg["To"]      = DEST_EMAIL
-        msg["Subject"] = f"Candidature — {poste} | {prenom} {nom}"
 
-        corps = f"""
-Nouvelle candidature reçue depuis le site Biware.
-
-Nom     : {prenom} {nom}
-Email   : {email}
-Poste   : {poste}
-
-Message :
-{message}
-        """
-        msg.attach(MIMEText(corps, "plain"))
-
-        # Attacher le CV
-        piece = MIMEBase("application", "octet-stream")
-        piece.set_payload(cv_bytes)
-        encoders.encode_base64(piece)
-        piece.add_header("Content-Disposition", f'attachment; filename="{cv_nom}"')
-        msg.attach(piece)
-
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as serveur:
-            serveur.ehlo()
-            serveur.starttls()
-            serveur.ehlo()
-            serveur.login(SMTP_USER, SMTP_PASSWORD)
-            serveur.sendmail(SMTP_USER, DEST_EMAIL, msg.as_string())
-
-        return True
-
-    except Exception as e:
-        print(f"Erreur : {e}")
-        return False
 
 def envoyer_devis(prenom, nom, email, telephone, societe, secteur, besoin, message):
     try:
