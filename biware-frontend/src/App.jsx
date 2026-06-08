@@ -13,7 +13,6 @@ import Numbers from './components/Numbers'
 import Cta from './components/Cta'
 import Footer from './components/Footer'
 import QuoteForm from './components/QuoteForm'
-import ContactForm from './components/ContactForm'
 import JobsSection from './components/JobsSection'
 import JobDetailPage from './pages/JobDetailPage'
 import CandidatureSpontanee from './components/CandidatureSpontanee';
