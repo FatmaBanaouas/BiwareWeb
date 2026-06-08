@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Biware — Gestion des offres</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --orange: #F26522;
+            --orange-dim: rgba(242,101,34,0.12);
+            --orange-border: rgba(242,101,34,0.25);
+            --dark: #111112;
+            --card: rgba(255,255,255,0.02);
+            --border: rgba(255,255,255,0.07);
+            --text: rgba(255,255,255,0.85);
+            --muted: rgba(255,255,255,0.4);
+            --faint: rgba(255,255,255,0.06);
+            --red: #ef4444;
+            --red-dim: rgba(220,38,38,0.12);
+            --red-border: rgba(220,38,38,0.25);
+            --green: #22c55e;
+            --green-dim: rgba(34,197,94,0.12);
+            --green-border: rgba(34,197,94,0.25);
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* Noise overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.35;
+        }
+
+        /* ── Layout ── */
+        .layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            background: rgba(255,255,255,0.015);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--faint);
+        }
+
+        .sidebar-logo img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .sidebar-logo-sub {
+            font-size: 0.65rem;
+            color: var(--muted);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 0.9rem;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover { color: #fff; background: var(--faint); }
+
+        .nav-item.active {
+            color: var(--orange);
+            background: var(--orange-dim);
+            border-color: var(--orange-border);
+        }
+
+        .nav-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        .nav-item.active .nav-icon { opacity: 1; }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--faint);
+            font-size: 0.72rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            margin-right: 0.4rem;
+            box-shadow: 0 0 6px var(--green);
+        }
+
+        /* ── Main ── */
+        .main {
+            padding: 2.5rem 3rem;
+            overflow-y: auto;
+        }
+
+        /* ── Page header ── */
+        .page-header {
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.65rem;
+            color: var(--orange);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+
+        .page-badge span {
+            width: 16px;
+            height: 2px;
+            background: var(--orange);
+            border-radius: 1px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .page-title em {
+            font-style: normal;
+            color: var(--orange);
+        }
+
+        .page-subtitle {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+
+        /* ── Two-col layout ── */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.75rem;
+        }
+
+        .card-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 3px;
+            height: 14px;
+            background: var(--orange);
+            border-radius: 2px;
+        }
+
+        /* ── Form elements ── */
+        .form-group { margin-bottom: 1.1rem; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.85rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.02em;
+        }
+
+        label.req::after {
+            content: ' *';
+            color: var(--orange);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 0.7rem 0.9rem;
+            color: #fff;
+            font-size: 0.85rem;
+            font-family: inherit;
+            transition: border-color 0.2s, background 0.2s;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--orange);
+            background: rgba(242,101,34,0.04);
+        }
+
+        input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            line-height: 1.5;
+        }
+
+        select option { background: #1a1a1a; }
+
+        .field-hint {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.2);
+            margin-top: 0.3rem;
+        }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s var(--ease);
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--orange);
+            color: #fff;
+            width: 100%;
+            padding: 0.85rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .btn-ghost {
+            background: var(--faint);
+            color: var(--muted);
+            border: 1px solid var(--border);
+            font-size: 0.78rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-ghost:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+
+        .btn-danger {
+            background: var(--red-dim);
+            color: var(--red);
+            border: 1px solid var(--red-border);
+            padding: 0.35rem 0.85rem;
+            font-size: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .btn-danger:hover { background: rgba(220,38,38,0.22); }
+
+        /* ── Alert messages ── */
+        .alert {
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .alert.success {
+            background: var(--green-dim);
+            border: 1px solid var(--green-border);
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alert.error {
+            background: var(--red-dim);
+            border: 1px solid var(--red-border);
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ── Preview ── */
+        .preview-box {
+            background: rgba(255,255,255,0.015);
+            border: 1px solid var(--faint);
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
+            margin-top: 1.25rem;
+            display: none;
+        }
+
+        .preview-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+
+        .preview-title { font-size: 0.95rem; font-weight: 800; color: #fff; }
+        .preview-meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
+        .preview-desc { font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-top: 0.4rem; font-style: italic; }
+
+        /* ── Jobs list ── */
+        .jobs-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .jobs-count {
+            font-size: 0.72rem;
+            color: var(--muted);
+            background: var(--faint);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+        }
+
+        .job-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.9rem 1rem;
+            background: rgba(255,255,255,0.015);
+            border: 1px solid var(--faint);
+            border-radius: 12px;
+            margin-bottom: 0.6rem;
+            transition: border-color 0.2s;
+        }
+
+        .job-item:hover { border-color: rgba(255,255,255,0.12); }
+
+        .job-item-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+
+        .job-item-meta {
+            font-size: 0.72rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .contract-badge {
+            padding: 0.15rem 0.55rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .badge-cdi { background: var(--orange-dim); color: var(--orange); }
+        .badge-stage { background: var(--green-dim); color: var(--green); }
+        .badge-other { background: var(--faint); color: var(--muted); }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .empty-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.4;
+        }
+
+        .loading-state {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.5rem;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--faint);
+            border-top-color: var(--orange);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        /* ── Info banner ── */
+        .info-banner {
+            background: var(--orange-dim);
+            border: 1px solid var(--orange-border);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        /* scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(242,101,34,0.3); border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-sub">Admin Panel</div>
+        </div>
+        <div class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            Offres d'emploi
+        </div>
+
+        <div class="nav-item" style="opacity:0.4; pointer-events:none;">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Candidatures
+        </div>
+
+        <div class="nav-item" style="opacity:0.4; pointer-events:none;">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9,22 9,12 15,12 15,22"/>
+            </svg>
+            Site web
+        </div>
+
+        <div class="sidebar-footer">
+            <div><span class="status-dot"></span>Backend connecté</div>
+            <div style="margin-top:0.3rem;">localhost:8000</div>
+        </div>
+    </aside>
+
+    <!-- ── Main ── -->
+    <main class="main">
+
+        <!-- Page header -->
+        <div class="page-header">
+            <div>
+                <div class="page-badge"><span></span>Gestion RH</div>
+                <h1 class="page-title">Offres d'<em>emploi</em></h1>
+                <p class="page-subtitle">Publiez et gérez les offres visibles sur le site.</p>
+            </div>
+            <a href="http://localhost:5173/#carrieres" target="_blank"
+               style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.75rem;color:var(--muted);text-decoration:none;background:var(--faint);border:1px solid var(--border);padding:0.5rem 0.9rem;border-radius:8px;transition:all 0.2s;font-weight:600;"
+               onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--muted)'">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Voir le site
+            </a>
+        </div>
+
+        <div class="info-banner">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Les offres publiées apparaissent immédiatement dans la section Carrières du site.
+        </div>
+
+        <!-- Two-col grid -->
+        <div class="content-grid">
+
+            <!-- ── Formulaire ── -->
+            <div class="card">
+                <div class="card-title">Nouvelle offre</div>
+
+                <form id="jobForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="req">Titre du poste</label>
+                            <input type="text" id="title" placeholder="Ex: Data Engineer">
+                        </div>
+                        <div class="form-group">
+                            <label class="req">Lieu</label>
+                            <input type="text" id="location" value="Tunis - Les Berges du Lac">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="req">Contrat</label>
+                            <select id="contract">
+                                <option value="CDI">CDI</option>
+                                <option value="CDD">CDD</option>
+                                <option value="Stage (4-6 mois)">Stage (4-6 mois)</option>
+                                <option value="Freelance">Freelance</option>
+                                <option value="Alternance">Alternance</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="req">Date de publication</label>
+                            <input type="text" id="date" placeholder="Ex: 15 Juin 2026">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="req">Description courte</label>
+                        <textarea id="shortDesc" rows="2" placeholder="1-2 phrases résumant le poste..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="req">Description détaillée</label>
+                        <textarea id="description" rows="4" placeholder="Missions, responsabilités..."></textarea>
+                        <div class="field-hint">Utilisez • pour les puces</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="req">Prérequis</label>
+                            <textarea id="requirements" rows="4" placeholder="Bac+5 en informatique&#10;3+ ans d'expérience&#10;Power BI avancé"></textarea>
+                            <div class="field-hint">Un prérequis par ligne</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="req">Nous offrons</label>
+                            <textarea id="benefits" rows="4" placeholder="Rémunération attractive&#10;Formation continue&#10;Télétravail partiel"></textarea>
+                            <div class="field-hint">Un avantage par ligne</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Publier l'offre
+                    </button>
+
+                    <div id="message" class="alert"></div>
+                </form>
+
+                <!-- Aperçu -->
+                <div class="preview-box" id="preview">
+                    <div class="preview-label">Aperçu</div>
+                    <div class="preview-title" id="prevTitle">—</div>
+                    <div class="preview-meta" id="prevMeta">—</div>
+                    <div class="preview-desc" id="prevDesc">—</div>
+                </div>
+            </div>
+
+            <!-- ── Liste des offres ── -->
+            <div class="card">
+                <div class="jobs-header">
+                    <div class="card-title" style="margin-bottom:0;">Offres publiées</div>
+                    <div style="display:flex;align-items:center;gap:0.6rem;">
+                        <span class="jobs-count" id="jobsCount">—</span>
+                        <button class="btn btn-ghost" onclick="loadJobs()">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 4 23 10 17 10"/>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                            </svg>
+                            Actualiser
+                        </button>
+                    </div>
+                </div>
+                <div id="jobsList" style="margin-top:1.25rem;"></div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:8000/api';
+
+    // ── Aperçu en temps réel ──
+    ['title','location','contract','date','shortDesc'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', updatePreview);
+        if (el) el.addEventListener('change', updatePreview);
+    });
+
+    function updatePreview() {
+        const title    = document.getElementById('title')?.value || '';
+        const location = document.getElementById('location')?.value || '';
+        const contract = document.getElementById('contract')?.value || '';
+        const date     = document.getElementById('date')?.value || '';
+        const desc     = document.getElementById('shortDesc')?.value || '';
+
+        const preview = document.getElementById('preview');
+        if (!title && !location) { preview.style.display = 'none'; return; }
+
+        preview.style.display = 'block';
+        document.getElementById('prevTitle').textContent = title || '—';
+        document.getElementById('prevMeta').textContent  = `${contract} · ${location || '—'} · ${date || '—'}`;
+        document.getElementById('prevDesc').textContent  = desc || '';
+    }
+
+    // ── Soumission du formulaire ──
+    document.getElementById('jobForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('submitBtn');
+        const msgDiv    = document.getElementById('message');
+
+        const title       = document.getElementById('title').value.trim();
+        const location    = document.getElementById('location').value.trim();
+        const contract    = document.getElementById('contract').value;
+        const date        = document.getElementById('date').value.trim();
+        const shortDesc   = document.getElementById('shortDesc').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const requirements = document.getElementById('requirements').value.split('\n').filter(l => l.trim());
+        const benefits     = document.getElementById('benefits').value.split('\n').filter(l => l.trim());
+
+        if (!title || !location || !date || !shortDesc || !description || !requirements.length || !benefits.length) {
+            showAlert(msgDiv, 'error', 'Veuillez remplir tous les champs obligatoires.');
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<div class="spinner"></div> Publication...`;
+        msgDiv.className = 'alert';
+
+        try {
+            const res = await fetch(`${API_URL}/admin/jobs`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, location, contract, date, shortDesc, description,
+                    requirements: JSON.stringify(requirements),
+                    benefits: JSON.stringify(benefits), published: true })
+            });
+
+            const result = await res.json();
+
+            if (res.ok && result.success) {
+                showAlert(msgDiv, 'success', 'Offre publiée avec succès !');
+                document.getElementById('jobForm').reset();
+                document.getElementById('location').value = 'Tunis - Les Berges du Lac';
+                document.getElementById('preview').style.display = 'none';
+                loadJobs();
+            } else {
+                throw new Error(result.detail || 'Erreur inconnue');
+            }
+        } catch (err) {
+            showAlert(msgDiv, 'error', `Erreur : ${err.message}`);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Publier l'offre`;
+        }
+    });
+
+    // ── Chargement des offres ──
+    async function loadJobs() {
+        const container = document.getElementById('jobsList');
+        container.innerHTML = `<div class="loading-state"><div class="spinner"></div> Chargement...</div>`;
+
+        try {
+            const res    = await fetch(`${API_URL}/jobs`);
+            const result = await res.json();
+            const jobs   = result.jobs || [];
+
+            document.getElementById('jobsCount').textContent = jobs.length + ' offre' + (jobs.length > 1 ? 's' : '');
+
+            if (!jobs.length) {
+                container.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div>Aucune offre publiée pour le moment.</div>`;
+                return;
+            }
+
+            container.innerHTML = jobs.map(job => {
+                const id = job.id ? job.id.replace('job-', '') : '';
+                const badgeClass = job.contract.includes('CDI') ? 'badge-cdi' : job.contract.includes('Stage') ? 'badge-stage' : 'badge-other';
+                return `
+                <div class="job-item">
+                    <div style="min-width:0;">
+                        <div class="job-item-title">${esc(job.title)}</div>
+                        <div class="job-item-meta">
+                            <span class="contract-badge ${badgeClass}">${esc(job.contract)}</span>
+                            <span>${esc(job.location)}</span>
+                            <span>·</span>
+                            <span>${esc(job.date)}</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger" onclick="deleteJob('${id}', '${esc(job.title)}')">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3,6 5,6 21,6"/><path d="M19,6l-1,14a2,2,0,0,1-2,2H8a2,2,0,0,1-2-2L5,6"/>
+                            <path d="M10,11v6"/><path d="M14,11v6"/><path d="M9,6V4a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1v2"/>
+                        </svg>
+                        Supprimer
+                    </button>
+                </div>`;
+            }).join('');
+
+        } catch (err) {
+            container.innerHTML = `<div class="empty-state" style="color:var(--red);">Erreur de connexion au backend.</div>`;
+        }
+    }
+
+    // ── Suppression ──
+    async function deleteJob(id, title) {
+        if (!confirm(`Supprimer "${title}" ?`)) return;
+        try {
+            const res    = await fetch(`${API_URL}/admin/jobs/${id}`, { method: 'DELETE' });
+            const result = await res.json();
+            if (res.ok && result.success) loadJobs();
+            else alert('Erreur : ' + (result.detail || 'Impossible de supprimer'));
+        } catch { alert('Erreur de connexion.'); }
+    }
+
+    // ── Helpers ──
+    function showAlert(el, type, msg) {
+        el.className = `alert ${type}`;
+        el.innerHTML = type === 'success'
+            ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> ${msg}`
+            : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> ${msg}`;
+    }
+
+    function esc(t) {
+        if (!t) return '';
+        const d = document.createElement('div');
+        d.textContent = t;
+        return d.innerHTML;
+    }
+
+    // Init
+    loadJobs();
+</script>
+</body>
+</html>
