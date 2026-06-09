@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import biwareLogo from "../assets/Biware_Logo_noir_page-0001-removebg-preview.png";
+import biwareLogo from "../assets/logo_facebook_2.png";
 
 export default function Navbar({ onOpenQuote }) {
   const [scrolled, setScrolled] = useState(false)
@@ -48,7 +48,7 @@ export default function Navbar({ onOpenQuote }) {
           src={biwareLogo}
           alt="Biware"
           style={{
-            height: '70px',
+            height: '40px',
             width: 'auto',
             transition: 'height 0.3s',
           }}
