@@ -129,30 +129,7 @@ export default function Products() {
                 Découvrir Synapse →
               </button>
             </div>
-            <div style={{ padding: '0 2.25rem 2.25rem' }}>
-              <div style={{ background: 'rgba(0,168,156,0.07)', border: '1px solid rgba(0,168,156,0.15)', borderRadius: 14, padding: '1.1rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.7rem' }}>
-                  <div style={{ fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.07em', fontWeight: 600, color: '#00A89C' }}>Engagement moyen</div>
-                  <div style={{ fontFamily: 'var(--font)', fontSize: '0.95rem', fontWeight: 800, color: '#fff' }}>78%</div>
-                </div>
-                <div style={{ height: 4, background: 'rgba(0,168,156,0.12)', borderRadius: 2, marginBottom: '0.45rem' }}>
-                  <div style={{ width: '78%', height: 4, borderRadius: 2, background: '#00A89C' }} />
-                </div>
-                <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginTop: '0.65rem' }}>
-                  {['Leadership', 'Reconnaissance', 'Feedback', 'Soft skills'].map(tag => (
-                    <div key={tag} style={{
-                      fontSize: '0.64rem',
-                      fontWeight: 600,
-                      padding: '0.18rem 0.6rem',
-                      borderRadius: 8,
-                      background: 'rgba(0,168,156,0.1)',
-                      color: 'rgba(0,168,156,0.8)',
-                      border: '1px solid rgba(0,168,156,0.18)',
-                    }}>{tag}</div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            
           </div>
 
           {/* Credit Squares - à compléter avec votre logo Credit Squares */}
@@ -228,30 +205,7 @@ export default function Products() {
               </button>
             </div>
             <div style={{ padding: '0 2.25rem 2.25rem' }}>
-              <div style={{ background: 'rgba(245,166,35,0.06)', border: '1px solid rgba(245,166,35,0.14)', borderRadius: 14, padding: '1.1rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.9rem' }}>
-                  <div>
-                    <div style={{ fontSize: '0.62rem', color: 'rgba(245,166,35,0.7)', textTransform: 'uppercase', letterSpacing: '0.07em', fontWeight: 600, marginBottom: '0.1rem' }}>Score de crédit</div>
-                    <div style={{ fontFamily: 'var(--font)', fontSize: '2rem', fontWeight: 900, color: '#F5A623', lineHeight: 1 }}>742</div>
-                  </div>
-                  <div style={{ fontSize: '0.62rem', fontWeight: 700, background: 'rgba(245,166,35,0.15)', color: '#F5A623', padding: '0.22rem 0.7rem', borderRadius: 8, border: '1px solid rgba(245,166,35,0.25)' }}>Faible risque</div>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
-                  {[
-                    { label: 'Historique', value: 88 },
-                    { label: 'Solvabilité', value: 74 },
-                    { label: 'Exposition', value: 61 }
-                  ].map(item => (
-                    <div key={item.label} style={{ display: 'flex', alignItems: 'center', fontSize: '0.73rem' }}>
-                      <div style={{ color: 'rgba(255,255,255,0.35)', minWidth: 85, fontWeight: 500 }}>{item.label}</div>
-                      <div style={{ flex: 1, height: 4, background: 'rgba(245,166,35,0.1)', borderRadius: 2, margin: '0 0.7rem' }}>
-                        <div style={{ width: `${item.value}%`, height: 4, borderRadius: 2, background: '#F5A623' }} />
-                      </div>
-                      <div style={{ color: '#F5A623', fontWeight: 700, minWidth: 30, textAlign: 'right' }}>{item.value}%</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
