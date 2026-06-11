@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 export const jobService = {
-  // Récupérer toutes les offres publiées
+
   async getAllJobs() {
     try {
       const response = await fetch(`${API_URL}/jobs`);
@@ -16,7 +16,7 @@ export const jobService = {
     }
   },
 
-  // Récupérer une offre spécifique
+
   async getJobById(id) {
     try {
       const numericId = id.toString().replace('job-', '');

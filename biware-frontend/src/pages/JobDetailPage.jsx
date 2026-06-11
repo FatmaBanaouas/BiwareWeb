@@ -20,7 +20,6 @@ export default function JobDetailPage() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
-  // Charger l'offre depuis l'API
   useEffect(() => {
     const loadJob = async () => {
       try {
@@ -77,7 +76,7 @@ export default function JobDetailPage() {
     submitData.append('cv', formData.cv);
 
     try {
-      // CORRECTION : enlever le double slash
+  
       const response = await fetch('http://localhost:8000/api/candidature', {
         method: 'POST',
         body: submitData,
@@ -99,7 +98,7 @@ export default function JobDetailPage() {
     }
   };
 
-  // Affichage pendant le chargement
+
   if (loadingJob) {
     return (
       <div style={{
@@ -210,7 +209,6 @@ export default function JobDetailPage() {
     }}>
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 2rem' }}>
 
-        {/* Bouton retour */}
         <button
           onClick={() => navigate('/')}
           style={{
@@ -233,7 +231,6 @@ export default function JobDetailPage() {
           Retour aux offres
         </button>
 
-        {/* Layout principal */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
@@ -241,7 +238,7 @@ export default function JobDetailPage() {
           alignItems: 'start',
         }}>
 
-          {/* ── Colonne gauche : détails ── */}
+
           <div
             style={{
               background: 'rgba(255,255,255,0.02)',
@@ -254,7 +251,7 @@ export default function JobDetailPage() {
               overflowY: 'auto',
             }}
           >
-            {/* Badge contrat */}
+   
             <div style={{
               display: 'inline-block',
               padding: '0.25rem 0.75rem',
@@ -268,7 +265,7 @@ export default function JobDetailPage() {
               {job.contract}
             </div>
 
-            {/* Titre */}
+          
             <h1 style={{
               fontSize: '2rem',
               fontWeight: 600,
@@ -278,7 +275,7 @@ export default function JobDetailPage() {
               {job.title}
             </h1>
 
-            {/* Localisation & date */}
+       
             <div style={{
               display: 'flex',
               gap: '1rem',
@@ -304,7 +301,6 @@ export default function JobDetailPage() {
               </div>
             </div>
 
-            {/* Description */}
             <div style={{ marginBottom: '1.5rem' }}>
               <h3 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '0.75rem' }}>Description du poste</h3>
               <div style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, fontSize: '0.9rem', whiteSpace: 'pre-line' }}>
@@ -312,7 +308,7 @@ export default function JobDetailPage() {
               </div>
             </div>
 
-            {/* Prérequis */}
+      
             <div style={{ marginBottom: '1.5rem' }}>
               <h3 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '0.75rem' }}>Prérequis</h3>
               <ul style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', lineHeight: 1.8, margin: 0, paddingLeft: '1.2rem' }}>
@@ -322,7 +318,7 @@ export default function JobDetailPage() {
               </ul>
             </div>
 
-            {/* Nous offrons */}
+    
             <div>
               <h3 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '0.75rem' }}>Nous offrons</h3>
               <ul style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', lineHeight: 1.8, margin: 0, paddingLeft: '1.2rem' }}>
@@ -333,7 +329,7 @@ export default function JobDetailPage() {
             </div>
           </div>
 
-          {/* ── Colonne droite : formulaire ── */}
+     
           <div style={{
             background: 'rgba(255,255,255,0.02)',
             border: '1px solid rgba(255,255,255,0.06)',
@@ -360,7 +356,7 @@ export default function JobDetailPage() {
             )}
 
             <form onSubmit={handleSubmit}>
-              {/* Nom & Prénom */}
+        
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
                 <div>
                   <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem', display: 'block', marginBottom: '0.4rem' }}>
@@ -406,7 +402,6 @@ export default function JobDetailPage() {
                 </div>
               </div>
 
-              {/* Email */}
               <div style={{ marginBottom: '1rem' }}>
                 <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem', display: 'block', marginBottom: '0.4rem' }}>
                   Email *
@@ -429,7 +424,6 @@ export default function JobDetailPage() {
                 />
               </div>
 
-              {/* Téléphone */}
               <div style={{ marginBottom: '1rem' }}>
                 <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem', display: 'block', marginBottom: '0.4rem' }}>
                   Téléphone *
@@ -452,7 +446,6 @@ export default function JobDetailPage() {
                 />
               </div>
 
-              {/* CV */}
               <div style={{ marginBottom: '1rem' }}>
                 <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem', display: 'block', marginBottom: '0.4rem' }}>
                   CV (PDF ou Word) *
@@ -477,7 +470,6 @@ export default function JobDetailPage() {
                 </div>
               </div>
 
-              {/* Message */}
               <div style={{ marginBottom: '1.5rem' }}>
                 <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem', display: 'block', marginBottom: '0.4rem' }}>
                   Message de motivation (optionnel)
@@ -502,7 +494,6 @@ export default function JobDetailPage() {
                 />
               </div>
 
-              {/* Submit */}
               <button
                 type="submit"
                 disabled={loading}

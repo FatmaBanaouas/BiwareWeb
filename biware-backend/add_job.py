@@ -1,4 +1,3 @@
-# add_job.py
 import sqlite3
 import json
 
@@ -16,7 +15,7 @@ def add_job(title, location, contract, date, short_desc, description, requiremen
     conn.close()
     print(f"✓ Offre ajoutée : {title}")
 
-# Exemple - Ajoute une nouvelle offre
+
 add_job(
     title="Consultant Data Scientist",
     location="Tunis - Les Berges du Lac",

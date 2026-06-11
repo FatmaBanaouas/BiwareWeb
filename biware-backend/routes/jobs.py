@@ -10,7 +10,7 @@ from models import get_db, JobOffer
 
 router = APIRouter(prefix="/api", tags=["jobs"])
 
-# Modèle Pydantic pour la création d'offre
+
 class JobCreate(BaseModel):
     title: str
     location: str
@@ -18,8 +18,8 @@ class JobCreate(BaseModel):
     date: str
     shortDesc: str
     description: str
-    requirements: str  # JSON string
-    benefits: str      # JSON string
+    requirements: str  
+    benefits: str  
     published: bool = True
 
 
@@ -47,9 +47,6 @@ def create_job_admin(job: JobCreate, db: Session = Depends(get_db)):
         print(f"Erreur: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-# ============================================
-# ROUTES PUBLIQUES
-# ============================================
 
 @router.get("/jobs")
 def get_all_jobs(db: Session = Depends(get_db)):
@@ -61,7 +58,7 @@ def get_all_jobs(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/jobs/{job_id}")
-def get_job_by_id(job_id: str, db: Session = Depends(get_db)):  # str au lieu de int
+def get_job_by_id(job_id: str, db: Session = Depends(get_db)): 
     try:
         # Extraire le vrai id numérique
         real_id = int(job_id.replace("job-", "")) if job_id.startswith("job-") else int(job_id)

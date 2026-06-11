@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function CandidatureSpontanee() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nom: '',
@@ -17,18 +19,18 @@ export default function CandidatureSpontanee() {
   const [error, setError] = useState('');
 
   const domaines = [
-    'Business Intelligence',
-    'Data Engineering',
-    'Data Science',
-    'Risk Management',
-    'Customer Intelligence',
-    'Advanced Analytics',
-    'Data Management',
-    'Formation Power BI',
-    'Formation SAS',
-    'Stage',
-    'Alternance',
-    'Autre'
+    t('candidature.domaines.bi'),
+    t('candidature.domaines.data_eng'),
+    t('candidature.domaines.data_science'),
+    t('candidature.domaines.risk'),
+    t('candidature.domaines.customer'),
+    t('candidature.domaines.analytics'),
+    t('candidature.domaines.data_mgmt'),
+    t('candidature.domaines.powerbi'),
+    t('candidature.domaines.sas'),
+    t('candidature.domaines.stage'),
+    t('candidature.domaines.alternance'),
+    t('candidature.domaines.autre')
   ];
 
   const handleChange = (e) => {
@@ -46,7 +48,7 @@ export default function CandidatureSpontanee() {
       setFormData(prev => ({ ...prev, cv: file }));
       setError('');
     } else {
-      setError('Veuillez uploader un fichier PDF ou Word');
+      setError(t('candidature.cv_error') || 'Veuillez uploader un fichier PDF ou Word');
     }
   };
 
@@ -142,12 +144,10 @@ export default function CandidatureSpontanee() {
             </svg>
           </div>
           <h2 style={{ color: '#fff', fontSize: '1.6rem', marginBottom: '0.75rem', fontWeight: 700, letterSpacing: '-0.02em' }}>
-            Candidature envoyée !
+            {t('candidature.success_title')}
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.5)', marginBottom: '2rem', lineHeight: 1.7, fontSize: '0.9rem' }}>
-            Merci <strong style={{ color: 'var(--bw-orange)' }}>{formData.prenom}</strong> !<br />
-            Votre candidature spontanée a bien été reçue.<br />
-            Nous vous répondrons dans les plus brefs délais.
+            {t('candidature.success_message').replace('{prenom}', formData.prenom)}
           </p>
           <button
             onClick={() => navigate('/')}
@@ -165,7 +165,7 @@ export default function CandidatureSpontanee() {
             onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
             onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
           >
-            Retour à l'accueil
+            {t('candidature.success_button')}
           </button>
         </div>
       </div>
@@ -173,7 +173,7 @@ export default function CandidatureSpontanee() {
   }
 
   return (
-    <div style={{
+    <div className="candidature-page" style={{
       minHeight: '100vh',
       background: 'var(--bw-darker)',
       paddingTop: '120px',
@@ -181,7 +181,6 @@ export default function CandidatureSpontanee() {
     }}>
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 2rem' }}>
 
-        {/* Bouton retour */}
         <button
           onClick={() => navigate('/')}
           style={{
@@ -202,10 +201,9 @@ export default function CandidatureSpontanee() {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
-          Retour aux offres
+          {t('candidature.back')}
         </button>
 
-        {/* ── En-tête identique à Services ── */}
         <div>
           <div style={{
             display: 'inline-flex',
@@ -219,7 +217,7 @@ export default function CandidatureSpontanee() {
             marginBottom: '0.85rem',
           }}>
             <span style={{ width: 20, height: 2, background: 'var(--bw-orange)', borderRadius: 1 }} />
-            Candidature
+            {t('candidature.badge')}
           </div>
 
           <h1 style={{
@@ -231,7 +229,7 @@ export default function CandidatureSpontanee() {
             color: '#fff',
             marginBottom: '1rem',
           }}>
-            Candidature <span style={{ color: 'var(--bw-orange)' }}>spontanée</span>
+            {t('candidature.title')}
           </h1>
 
           <p style={{
@@ -241,12 +239,11 @@ export default function CandidatureSpontanee() {
             maxWidth: 480,
             fontWeight: 300,
           }}>
-            Vous ne trouvez pas d'offre correspondant à votre profil ? Postulez spontanément.
+            {t('candidature.subtitle')}
           </p>
         </div>
 
-        {/* ── Formulaire ── */}
-        <div style={{
+        <div className="candidature-form-card" style={{
           background: 'rgba(255,255,255,0.02)',
           border: '1px solid rgba(255,255,255,0.06)',
           borderRadius: 24,
@@ -268,11 +265,9 @@ export default function CandidatureSpontanee() {
           )}
 
           <form onSubmit={handleSubmit}>
-
-            {/* Nom & Prénom */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+            <div className="form-two-cols" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
               <div>
-                <label style={labelStyle}>Nom *</label>
+                <label style={labelStyle}>{t('candidature.nom')} *</label>
                 <input
                   type="text" name="nom" value={formData.nom} onChange={handleChange}
                   style={inputStyle}
@@ -281,7 +276,7 @@ export default function CandidatureSpontanee() {
                 />
               </div>
               <div>
-                <label style={labelStyle}>Prénom *</label>
+                <label style={labelStyle}>{t('candidature.prenom')} *</label>
                 <input
                   type="text" name="prenom" value={formData.prenom} onChange={handleChange}
                   style={inputStyle}
@@ -291,9 +286,8 @@ export default function CandidatureSpontanee() {
               </div>
             </div>
 
-            {/* Email */}
             <div style={{ marginBottom: '1rem' }}>
-              <label style={labelStyle}>Email *</label>
+              <label style={labelStyle}>{t('candidature.email')} *</label>
               <input
                 type="email" name="email" value={formData.email} onChange={handleChange}
                 style={inputStyle}
@@ -302,9 +296,8 @@ export default function CandidatureSpontanee() {
               />
             </div>
 
-            {/* Téléphone */}
             <div style={{ marginBottom: '1rem' }}>
-              <label style={labelStyle}>Téléphone *</label>
+              <label style={labelStyle}>{t('candidature.telephone')} *</label>
               <input
                 type="tel" name="telephone" value={formData.telephone} onChange={handleChange}
                 style={inputStyle}
@@ -313,9 +306,8 @@ export default function CandidatureSpontanee() {
               />
             </div>
 
-            {/* Domaine */}
             <div style={{ marginBottom: '1rem' }}>
-              <label style={labelStyle}>Domaine / Poste recherché *</label>
+              <label style={labelStyle}>{t('candidature.domaine')} *</label>
               <select
                 name="domaine" value={formData.domaine} onChange={handleChange}
                 style={{ ...inputStyle, cursor: 'pointer' }}
@@ -329,9 +321,8 @@ export default function CandidatureSpontanee() {
               </select>
             </div>
 
-            {/* CV */}
             <div style={{ marginBottom: '1rem' }}>
-              <label style={labelStyle}>CV (PDF ou Word) *</label>
+              <label style={labelStyle}>{t('candidature.cv')} *</label>
               <div
                 style={{
                   background: 'rgba(255,255,255,0.04)',
@@ -363,28 +354,26 @@ export default function CandidatureSpontanee() {
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
                   </svg>
-                  {formData.cv ? formData.cv.name : 'Cliquez pour télécharger votre CV'}
+                  {formData.cv ? formData.cv.name : t('candidature.cv_click')}
                 </label>
               </div>
               <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.25)', marginTop: '0.4rem' }}>
-                Formats acceptés : PDF, DOC, DOCX
+                {t('candidature.cv_formats')}
               </p>
             </div>
 
-            {/* Message */}
             <div style={{ marginBottom: '1.75rem' }}>
-              <label style={labelStyle}>Message de motivation (optionnel)</label>
+              <label style={labelStyle}>{t('candidature.message')}</label>
               <textarea
                 name="message" value={formData.message} onChange={handleChange}
                 rows={4}
-                placeholder="Parlez-nous de vous, de vos compétences et de vos motivations..."
+                placeholder={t('candidature.message_placeholder')}
                 style={{ ...inputStyle, resize: 'vertical' }}
                 onFocus={(e) => e.currentTarget.style.borderColor = 'var(--bw-orange)'}
                 onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'}
               />
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
@@ -405,9 +394,8 @@ export default function CandidatureSpontanee() {
               onMouseEnter={(e) => { if (!loading) e.currentTarget.style.opacity = '0.9'; }}
               onMouseLeave={(e) => { if (!loading) e.currentTarget.style.opacity = '1'; }}
             >
-              {loading ? 'Envoi en cours...' : 'Envoyer ma candidature'}
+              {loading ? t('candidature.sending') : t('candidature.submit')}
             </button>
-
           </form>
         </div>
       </div>

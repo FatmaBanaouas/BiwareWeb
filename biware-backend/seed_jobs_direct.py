@@ -1,11 +1,10 @@
-# seed_jobs_direct.py
+
 import sqlite3
 import json
 
 conn = sqlite3.connect('biware.db')
 cursor = conn.cursor()
 
-# Créer la table si elle n'existe pas
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS job_offers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

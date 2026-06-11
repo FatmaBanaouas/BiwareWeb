@@ -14,8 +14,8 @@ from flask_login import LoginManager, login_required, login_user, logout_user, c
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Permet les requêtes depuis React
-# Après app = Flask(__name__)
+CORS(app)  
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///biware.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'biware-secret-key-2024')
@@ -23,13 +23,11 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'biware-secret-key-2024')
 db.init_app(app)
 login_manager.init_app(app)
 
-# Créer les tables
 with app.app_context():
     db.create_all()
     print("✓ Base de données initialisée")
 
     
-# Configuration email
 SMTP_HOST = os.getenv("SMTP_HOST")
 SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
 SMTP_USER = os.getenv("SMTP_USER")
@@ -47,41 +45,39 @@ def envoyer_candidature_email(nom, prenom, email, telephone, poste, message, cv_
         corps = f"""
 Nouvelle candidature reçue depuis le site Biware Consulting.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 INFORMATIONS CANDIDAT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 Nom complet : {prenom} {nom}
 Email       : {email}
 Téléphone   : {telephone}
 Poste visé  : {poste}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 MESSAGE DE MOTIVATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {message if message else "Aucun message fourni."}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 CV ATTACHÉ
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 Le CV est joint à cet email.
 
----
+
 À contacter sous 24h.
 Biware Consulting · contact@biware-consulting.com · +216 29 969 439
 """
         msg.attach(MIMEText(corps, "plain", "utf-8"))
 
-        # Attacher le CV
         piece = MIMEBase("application", "octet-stream")
         piece.set_payload(cv_bytes)
         encoders.encode_base64(piece)
         piece.add_header("Content-Disposition", f'attachment; filename="{cv_nom}"')
         msg.attach(piece)
 
-        # Envoyer l'email
+
         with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as serveur:
             serveur.ehlo()
             serveur.starttls()
@@ -108,36 +104,36 @@ Bonjour {prenom} {nom},
 
 Nous accusons bonne réception de votre candidature pour le poste de :
 
-📌 {poste}
+{poste}
 
 Votre CV et votre message ont bien été transmis à notre équipe RH.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 PROCHAINES ÉTAPES
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 1️⃣ Nous étudierons votre candidature sous 48h ouvrées
 2️⃣ Si votre profil correspond, nous vous contacterons pour un entretien
 3️⃣ Vous recevrez un retour dans tous les cas
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 À SAVOIR
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 • Les entretiens se déroulent à notre bureau : Les Berges du Lac, Tunis
 • La durée moyenne de recrutement est de 2 semaines
 • Vous pouvez postuler à plusieurs offres
 
 En attendant, nous vous invitons à suivre notre actualité sur LinkedIn :
-🔗 https://www.linkedin.com/company/biware-consulting
+https://www.linkedin.com/company/biware-consulting
 
 Cordialement,
 L'équipe Biware Consulting
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📧 contact@biware-consulting.com
-📞 +216 29 969 439
-🌐 https://biware-consulting.com
-📍 Rue du Lac Windermere, Résidence ERRAWDHA, 1053 Les Berges du Lac, Tunis
+
+contact@biware-consulting.com
++216 29 969 439
+https://biware-consulting.com
+Rue du Lac Windermere, Résidence ERRAWDHA, 1053 Les Berges du Lac, Tunis
 """
         msg.attach(MIMEText(corps, "plain", "utf-8"))
 
@@ -158,7 +154,7 @@ L'équipe Biware Consulting
 def recevoir_candidature():
     """Endpoint pour recevoir les candidatures depuis React"""
     try:
-        # Récupérer les données du formulaire
+  
         nom = request.form.get('nom')
         prenom = request.form.get('prenom')
         email = request.form.get('email')
@@ -166,14 +162,14 @@ def recevoir_candidature():
         poste = request.form.get('poste')
         message = request.form.get('message', '')
 
-        # Vérifier les champs obligatoires
+       
         if not all([nom, prenom, email, telephone, poste]):
             return jsonify({
                 'success': False,
                 'message': 'Veuillez remplir tous les champs obligatoires'
             }), 400
 
-        # Vérifier le CV
+       
         if 'cv' not in request.files:
             return jsonify({
                 'success': False,
@@ -187,7 +183,6 @@ def recevoir_candidature():
                 'message': 'Veuillez joindre votre CV'
             }), 400
 
-        # Vérifier l'extension du fichier
         allowed_extensions = {'.pdf', '.doc', '.docx'}
         file_ext = os.path.splitext(cv.filename)[1].lower()
         if file_ext not in allowed_extensions:
@@ -196,11 +191,9 @@ def recevoir_candidature():
                 'message': 'Format de fichier non supporté. Utilisez PDF ou Word.'
             }), 400
 
-        # Lire le contenu du CV
         cv_bytes = cv.read()
         cv_nom = f"{prenom}_{nom}_{poste.replace(' ', '_')}{file_ext}"
 
-        # Envoyer l'email à l'entreprise
         email_envoye = envoyer_candidature_email(
             nom, prenom, email, telephone, poste, message, cv_bytes, cv_nom
         )
@@ -211,7 +204,6 @@ def recevoir_candidature():
                 'message': 'Erreur lors de l\'envoi de la candidature. Veuillez réessayer.'
             }), 500
 
-        # Envoyer la confirmation au candidat
         envoyer_confirmation_candidat(nom, prenom, email, poste)
 
         return jsonify({
@@ -232,9 +224,9 @@ def health_check():
     return jsonify({'status': 'ok', 'message': 'API Biware est fonctionnelle'}), 200
 
 if __name__ == '__main__':
-    print("🚀 Démarrage de l'API Biware Candidatures...")
-    print(f"📧 Emails envoyés à: {DEST_EMAIL}")
-    print("📍 API disponible sur http://localhost:5000")
+    print("Démarrage de l'API Biware Candidatures...")
+    print(f"Emails envoyés à: {DEST_EMAIL}")
+    print("API disponible sur http://localhost:5000")
     app.run(debug=True, port=5000)
 
 
@@ -278,7 +270,7 @@ def recevoir_candidature_spontanee():
         cv_bytes = cv.read()
         cv_nom = f"Candidature_spontanee_{prenom}_{nom}{file_ext}"
 
-        # Envoyer l'email
+    
         email_envoye = envoyer_candidature_spontanee_email(
             nom, prenom, email, telephone, domaine, message, cv_bytes, cv_nom
         )
@@ -314,28 +306,27 @@ def envoyer_candidature_spontanee_email(nom, prenom, email, telephone, domaine, 
         corps = f"""
 Nouvelle candidature spontanée reçue depuis le site Biware Consulting.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 INFORMATIONS CANDIDAT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 Nom complet : {prenom} {nom}
 Email       : {email}
 Téléphone   : {telephone}
 Domaine     : {domaine}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 MESSAGE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 {message if message else "Aucun message fourni."}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CV ATTACHÉ
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 Le CV est joint à cet email.
 
----
+
 À contacter sous 24h.
 Biware Consulting
 """
@@ -372,7 +363,7 @@ Bonjour {prenom} {nom},
 
 Nous accusons bonne réception de votre candidature spontanée dans le domaine :
 
-📌 {domaine}
+{domaine}
 
 Votre CV a bien été transmis à notre équipe RH.
 
@@ -384,10 +375,10 @@ En attendant, nous vous invitons à :
 
 Cordialement,
 L'équipe Biware Consulting
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📧 contact@biware-consulting.com
-📞 +216 29 969 439
-🌐 https://biware-consulting.com
+
+contact@biware-consulting.com
++216 29 969 439
+https://biware-consulting.com
 """
         msg.attach(MIMEText(corps, "plain", "utf-8"))
 

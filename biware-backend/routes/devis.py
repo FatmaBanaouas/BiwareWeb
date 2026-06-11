@@ -14,7 +14,7 @@ async def recevoir_devis(
     besoin: str = Form(...),
     message: str = Form(None)
 ):
-    # Ajoutez ces logs pour déboguer
+   
     print(f"=== NOUVELLE DEMANDE DE DEVIS ===")
     print(f"Prénom: {prenom}")
     print(f"Nom: {nom}")

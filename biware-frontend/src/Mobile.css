@@ -1,0 +1,207 @@
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+
+
+  section {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .nav-links {
+    display: none !important;
+  }
+  .nav-actions {
+    gap: 0.5rem !important;
+  }
+  .nav-devis-btn {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-root {
+    padding: 0.85rem 1.25rem !important;
+  }
+  .nav-hamburger {
+    display: flex !important;
+  }
+  .nav-mobile-menu {
+    display: flex !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 6rem 1.25rem 4rem !important;
+    min-height: auto !important;
+  }
+  .hero-stats {
+    gap: 1.5rem !important;
+    margin-top: 2.5rem !important;
+  }
+  .hero-buttons {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .hero-buttons button {
+    width: 100% !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .numbers-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 2rem 1rem !important;
+  }
+}
+@media (max-width: 480px) {
+  .numbers-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .mission-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+  .mission-pillars {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+  }
+  .mission-photo {
+    order: -1;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .clients-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+  .clients-filters {
+    gap: 0.5rem !important;
+  }
+  .clients-section {
+    padding: 5rem 1.25rem !important;
+  }
+}
+@media (max-width: 480px) {
+  .clients-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .formations-header {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    margin-bottom: 2rem !important;
+  }
+  .formations-cards {
+    grid-template-columns: 1fr !important;
+  }
+  .formations-cta {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1.25rem !important;
+  }
+  .formations-cta button {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+}
+@media (min-width: 480px) and (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .jobs-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .cta-section {
+    padding: 5rem 1.25rem !important;
+  }
+  .cta-buttons {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .cta-buttons button {
+    width: 100% !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .footer-info {
+    flex-direction: column !important;
+    gap: 0.85rem !important;
+    padding: 1.5rem 1.25rem !important;
+  }
+  .footer-root {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 1.5rem 1.25rem !important;
+    gap: 1.25rem !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .form-two-cols {
+    grid-template-columns: 1fr !important;
+  }
+  .modal-inner {
+    padding: 1.5rem 1.25rem !important;
+    border-radius: 16px !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .candidature-page {
+    padding-top: 90px !important;
+    padding-bottom: 3rem !important;
+  }
+  .candidature-form-card {
+    padding: 1.5rem 1.25rem !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .partners-bar {
+    padding: 1rem 1.25rem !important;
+    gap: 1rem !important;
+  }
+}

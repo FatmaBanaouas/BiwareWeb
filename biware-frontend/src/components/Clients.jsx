@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import AlBareedLogo from "../assets/Al_bareed.png"
 import AlMaghribLogo from "../assets/Al_maghrib.png"
 import InwiLogo from "../assets/INWI.png"
@@ -29,7 +30,22 @@ import OoreedoTnLogo from "../assets/Ooredoo_TN.png"
 import sasLogo from "../assets/Saas logo.png"
 
 export default function Clients() {
-  const [selectedSector, setSelectedSector] = useState('Tous');
+  const { t } = useTranslation();
+  const [selectedSector, setSelectedSector] = useState('all');
+
+  // Map des secteurs en valeurs anglaises pour le filtrage
+  const sectorKeyMap = {
+    'Assurance': 'assurance',
+    'Banque': 'banque',
+    'Conseil': 'conseil',
+    'Conseil & Tech': 'conseil_tech',
+    'Énergie & Utilities': 'energie',
+    'Finance & Banque': 'finance',
+    'Industrie': 'industrie',
+    'Services': 'services',
+    'Tech & Logiciel': 'tech',
+    'Télécommunication': 'telecom'
+  };
 
   const clients = [
     { id: 1, name: 'Al Bareed', sector: 'Services', flag: '🌍', flagName: 'International', logo: AlBareedLogo },
@@ -62,17 +78,13 @@ export default function Clients() {
     { id: 28, name: 'SAS', sector: 'Tech & Logiciel', flag: '🌍', flagName: 'International', logo: sasLogo },
   ]
 
-  // Filtrer directement sans useEffect
-  const filteredClients = selectedSector === 'Tous' 
+  const filteredClients = selectedSector === 'all' 
     ? clients 
-    : clients.filter(client => client.sector === selectedSector)
+    : clients.filter(client => sectorKeyMap[client.sector] === selectedSector)
 
-  // Calculer les secteurs qui ont au moins un client
-  const sectorsWithClients = ['Tous', ...new Set(clients.map(client => client.sector))].sort((a, b) => {
-    if (a === 'Tous') return -1;
-    if (b === 'Tous') return 1;
-    return a.localeCompare(b);
-  });
+  const uniqueSectors = [...new Set(clients.map(client => client.sector))];
+  const sectorKeys = [...new Set(uniqueSectors.map(s => sectorKeyMap[s]))];
+  const sectorsWithClients = ['all', ...sectorKeys];
 
   const flagColor = (flagName) => {
     const map = {
@@ -88,10 +100,14 @@ export default function Clients() {
     return map[flagName] || { bg: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.4)' }
   }
 
+  const getTranslatedSector = (sectorKey) => {
+    if (sectorKey === 'all') return t('clients.all');
+    return t(`clients.sectors.${sectorKey}`);
+  }
+
   return (
     <section id="clients" style={{ padding: '7rem 3rem', background: 'var(--bw-darker)' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-
         <div className="reveal">
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
@@ -99,45 +115,44 @@ export default function Clients() {
             textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.85rem',
           }}>
             <span style={{ width: 20, height: 2, background: 'var(--bw-orange)', borderRadius: 1 }} />
-            Références clients
+            {t('clients.badge')}
           </div>
           <h2 style={{
             fontFamily: 'var(--font)', fontSize: 'clamp(2rem, 4vw, 3rem)',
             fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.1,
             color: '#fff', marginBottom: '1rem',
           }}>
-            Ils nous font <span style={{ color: 'var(--bw-orange)' }}>confiance</span>
+            {t('clients.title')}
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.95rem', lineHeight: 1.8, maxWidth: 560, fontWeight: 300 }}>
-            Des institutions financières, télécoms et industrielles de premier plan en Tunisie, Afrique et Europe.
+            {t('clients.subtitle')}
           </p>
         </div>
 
-        {/* Secteurs filtres interactifs */}
         <div style={{
           display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap',
           marginTop: '2.5rem', marginBottom: '2.5rem', paddingBottom: '1rem',
           borderBottom: '1px solid rgba(255,255,255,0.08)',
         }}>
           <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
-            Filtrer par secteur :
+            {t('clients.filter_label')}
           </div>
-          {sectorsWithClients.map(sector => (
+          {sectorsWithClients.map(sectorKey => (
             <button
-              key={sector}
-              onClick={() => setSelectedSector(sector)}
+              key={sectorKey}
+              onClick={() => setSelectedSector(sectorKey)}
               style={{
                 fontSize: '0.75rem',
                 fontWeight: 600,
                 padding: '0.4rem 1rem',
                 borderRadius: 30,
-                background: selectedSector === sector 
+                background: selectedSector === sectorKey 
                   ? 'var(--bw-orange)' 
                   : 'rgba(255,255,255,0.08)',
-                border: selectedSector === sector 
+                border: selectedSector === sectorKey 
                   ? '1px solid var(--bw-orange)' 
                   : '1px solid rgba(255,255,255,0.12)',
-                color: selectedSector === sector 
+                color: selectedSector === sectorKey 
                   ? '#000' 
                   : 'rgba(255,255,255,0.7)',
                 cursor: 'pointer',
@@ -145,25 +160,23 @@ export default function Clients() {
                 fontFamily: 'var(--font)',
               }}
             >
-              {sector}
+              {getTranslatedSector(sectorKey)}
             </button>
           ))}
         </div>
 
-        {/* Compteur de résultats */}
         <div style={{
           marginBottom: '1.5rem',
           fontSize: '0.8rem',
           color: 'rgba(255,255,255,0.4)',
         }}>
-          {filteredClients.length} client{filteredClients.length > 1 ? 's' : ''} trouvé{filteredClients.length > 1 ? 's' : ''}
+          {filteredClients.length} {filteredClients.length > 1 ? t('clients.results_plural') : t('clients.results')}
         </div>
 
-        {/* Affichage des clients */}
         {filteredClients.length > 0 ? (
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '1rem',
             marginTop: '0rem',
           }}>
@@ -221,7 +234,7 @@ export default function Clients() {
                   {client.name}
                 </div>
                 <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.45)', fontWeight: 500 }}>
-                  {client.sector}
+                  {t(`clients.sectors.${sectorKeyMap[client.sector]}`)}
                 </div>
                 <div style={{
                   fontSize: '0.65rem', fontWeight: 700, padding: '0.15rem 0.55rem',
@@ -234,7 +247,6 @@ export default function Clients() {
               </div>
             ))}
 
-            {/* Card CTA - Affichée dans TOUS les cas */}
             <div
               style={{
                 background: 'rgba(242,101,34,0.06)',
@@ -256,10 +268,10 @@ export default function Clients() {
             >
               <div style={{ fontSize: '1.8rem', marginBottom: '0.3rem' }}>✦</div>
               <div style={{ fontFamily: 'var(--font)', fontSize: '0.88rem', fontWeight: 800, color: 'var(--bw-orange)' }}>
-                Votre entreprise ?
+                {t('clients.cta_title')}
               </div>
               <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.45)', fontWeight: 500 }}>
-                Rejoignez nos références
+                {t('clients.cta_subtitle')}
               </div>
               <button 
                 onClick={() => window.location.href = '#contact'}
@@ -283,7 +295,7 @@ export default function Clients() {
                   e.currentTarget.style.color = 'rgba(255,255,255,0.6)'
                 }}
               >
-                Contactez-nous →
+                {t('clients.cta_button')}
               </button>
             </div>
           </div>
@@ -297,13 +309,13 @@ export default function Clients() {
           }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
             <div style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff', marginBottom: '0.5rem' }}>
-              Aucun client dans ce secteur
+              {t('clients.no_results_title')}
             </div>
             <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)' }}>
-              D'autres secteurs pourraient vous intéresser
+              {t('clients.no_results_subtitle')}
             </div>
             <button
-              onClick={() => setSelectedSector('Tous')}
+              onClick={() => setSelectedSector('all')}
               style={{
                 marginTop: '1.5rem',
                 padding: '0.5rem 1.5rem',
@@ -317,11 +329,10 @@ export default function Clients() {
                 transition: 'all 0.2s',
               }}
             >
-              Voir tous les clients
+              {t('clients.no_results_button')}
             </button>
           </div>
         )}
-
       </div>
     </section>
   )

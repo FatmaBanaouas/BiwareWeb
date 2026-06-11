@@ -23,7 +23,7 @@ async def recevoir_demande_formation(
     Envoie un email à l'administrateur et une confirmation au client.
     """
     
-    # Logs pour déboguer
+   
     print(f"=== NOUVELLE DEMANDE DE FORMATION ===")
     print(f"Prénom: {prenom}")
     print(f"Nom: {nom}")
@@ -33,7 +33,7 @@ async def recevoir_demande_formation(
     print(f"Message: {message}")
     print(f"====================================")
     
-    # Validation supplémentaire des formations disponibles
+
     formations_disponibles = [
         "Formation Power BI",
         "Formation SAS®",
@@ -43,7 +43,7 @@ async def recevoir_demande_formation(
         "sur mesure"
     ]
     
-    # Vérifier si la formation demandée est valide
+
     formation_valide = any(
         formation_souhaitee.lower() == f.lower() or 
         formation_souhaitee.lower() in f.lower() or 
@@ -53,9 +53,9 @@ async def recevoir_demande_formation(
     
     if not formation_valide:
         print(f"Attention: Formation non standard demandée: {formation_souhaitee}")
-        # On continue quand même l'envoi, mais on log l'information
     
-    # Envoyer la demande
+    
+
     succes = envoyer_demande_formation(
         prenom=prenom,
         nom=nom,

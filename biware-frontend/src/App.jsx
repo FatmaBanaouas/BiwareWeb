@@ -17,8 +17,8 @@ import ContactForm from './components/ContactForm'
 import JobsSection from './components/JobsSection'
 import JobDetailPage from './pages/JobDetailPage'
 import CandidatureSpontanee from './components/CandidatureSpontanee';
+import ChatbotWidget from './components/Chatbotwidjet'
 
-// Composant pour la page d'accueil
 function HomePage({ onOpenQuote, onOpenContact }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -65,7 +65,6 @@ function App() {
   const [isContactOpen, setIsContactOpen] = useState(false)
   const location = useLocation()
 
-  // Si on est sur une page de candidature, on ne montre pas les modals
   const isJobPage = location.pathname.startsWith('/postuler')
 
   return (
@@ -83,14 +82,14 @@ function App() {
         <Route path="/postuler/:jobId" element={<JobDetailPage />} />
         <Route path="/candidature-spontanee" element={<CandidatureSpontanee />} />
       </Routes>
-      
-      {/* Modals - uniquement sur la page d'accueil */}
+  
       {!isJobPage && (
         <>
           <QuoteForm isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} />
           <ContactForm isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
         </>
       )}
+       <ChatbotWidget />
     </>
   )
 }

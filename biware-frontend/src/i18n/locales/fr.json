@@ -1,0 +1,325 @@
+{
+  "nav": {
+    "mission": "Mission",
+    "clients": "Clients",
+    "produits": "Produits",
+    "formations": "Formations",
+    "expertises": "Expertises",
+    "carrieres": "Carrières",
+    "contact": "Contact",
+    "devis": "Demander un devis",
+    "linkedin": "in",
+    "facebook": "f"
+  },
+  "hero": {
+    "badge": "Data Management & Analytics · SAS® Partner · Microsoft Gold Partner",
+    "title_line1": "There is no",
+    "title_line2": "Devil",
+    "title_line3": "in your Data",
+    "subtitle": "Biware accompagne les grandes entreprises d'Afrique et d'Europe à créer de la valeur à partir de leur actif DATA — connaissance client, risk management, analytics avancé.",
+    "btn_solutions": "Découvrir nos solutions ↗",
+    "btn_references": "Voir nos références →",
+    "stat_founded": "Fondée en",
+    "stat_engineers": "Ingénieurs data",
+    "stat_clients": "Références clients",
+    "stat_countries": "Pays couverts",
+    "stat_expertise": "D'expertise"
+  },
+  "mission": {
+    "badge": "Notre mission",
+    "title": "Nous faisons parler vos données",
+    "quote": "La donnée est le nouvel Or noir",
+    "quote_author": "Walid Kaâbachi, Co-fondateur & PDG",
+    "description": "Créée en 2011 par Walid Kaâbachi et Amine Boussarsar, Biware est une PME technologique tunisienne de plus de 30 ingénieurs et data scientists. Présente à Tunis, Lagos et Paris, notre mission est d'accompagner les entreprises à augmenter leurs revenus, optimiser leurs coûts et réduire leurs pertes grâce à la data.",
+    "pillar1": {
+      "title": "Connaissance client",
+      "desc": "Segmentation, ciblage et personnalisation des offres grâce à la data"
+    },
+    "pillar2": {
+      "title": "Risk Management & Fraude",
+      "desc": "Détection, conformité et prévention des risques financiers en temps réel"
+    },
+    "pillar3": {
+      "title": "Prévision de la demande",
+      "desc": "Modèles prédictifs et analytics avancés pour anticiper les tendances"
+    },
+    "pillar4": {
+      "title": "Consulting & Formation",
+      "desc": "Accompagnement, intégration et montée en compétence de vos équipes"
+    },
+    "founders_labels": ["Amine Boussarsar · DG", "Walid Kaâbachi · PDG"],
+    "founders_alt": "Walid Kaâbachi et Amine Boussarsar, co-fondateurs de Biware"
+  },
+  "clients": {
+  "badge": "Références clients",
+  "title": "Ils nous font confiance",
+  "subtitle": "Des institutions financières, télécoms et industrielles de premier plan en Tunisie, Afrique et Europe.",
+  "filter_label": "Filtrer par secteur :",
+  "all": "Tous",
+  "results": "client trouvé",
+  "results_plural": "clients trouvés",
+  "cta_title": "Votre entreprise ?",
+  "cta_subtitle": "Rejoignez nos références",
+  "cta_button": "Contactez-nous →",
+  "no_results_title": "Aucun client dans ce secteur",
+  "no_results_subtitle": "D'autres secteurs pourraient vous intéresser",
+  "no_results_button": "Voir tous les clients",
+  "sectors": {
+    "assurance": "Assurance",
+    "banque": "Banque",
+    "conseil": "Conseil",
+    "conseil_tech": "Conseil & Tech",
+    "energie": "Énergie & Utilities",
+    "finance": "Finance & Banque",
+    "industrie": "Industrie",
+    "services": "Services",
+    "tech": "Tech & Logiciel",
+    "telecom": "Télécommunication"
+  }
+
+  },
+  "products": {
+    "badge": "Nos produits phares",
+    "title": "Deux solutions. Une ambition : votre performance.",
+    "subtitle": "Conçus par Biware pour adresser les besoins métiers les plus critiques.",
+    "synapse": {
+      "name": "Synapse",
+      "tagline": "Build your strong staff",
+      "badge": "RH & Engagement",
+      "description": "Solution d'engagement collaborateur et de développement personnel. Synapse mesure la santé relationnelle et émotionnelle de vos équipes grâce à l'IA Analytics.",
+      "features": [
+        "AI Analytics : scoring d'engagement",
+        "Application mobile — feedback continu",
+        "Résumés des interactions d'équipe",
+        "Baromètres RH et soft skills"
+      ],
+      "button": "Découvrir Synapse →"
+    },
+    "credit_squares": {
+      "name": "Credit Squares",
+      "tagline": "Portefeuille sain & croissance durable",
+      "badge": "Crédit & Risque",
+      "description": "Credit Squares accroît l'efficacité opérationnelle et commerciale des institutions de crédit en maintenant un portefeuille sain.",
+      "features": [
+        "Automatisation des tâches opérationnelles",
+        "Accès rapide aux informations",
+        "Scoring crédit paramétrable",
+        "Suivi du portefeuille"
+      ],
+      "button": "Découvrir Credit Squares →"
+    }
+  },
+  "formations": {
+    "badge": "Formations certifiantes",
+    "title": "Renforcez vos équipes avec nos formations",
+    "subtitle": "Biware propose des formations expertes en Power BI et SAS® pour donner à vos équipes les outils et compétences nécessaires.",
+    "powerbi": {
+      "title": "Formation Power BI",
+      "subtitle": "Maîtrisez la visualisation et l'analyse de données avec l'outil Microsoft de référence.",
+      "features": [
+        "Prise en main de Power BI Desktop",
+        "Modélisation de données",
+        "Langage DAX avancé",
+        "Création de rapports interactifs",
+        "Publication Power BI Service"
+      ],
+      "badge": "Microsoft Power BI"
+    },
+    "sas": {
+      "title": "Formation SAS®",
+      "subtitle": "Devenez expert en analyse statistique et gestion des données avec la plateforme SAS®.",
+      "features": [
+        "Programmation SAS Base",
+        "SAS Enterprise Guide",
+        "Analyse statistique",
+        "Risk Management avec SAS",
+        "Préparation certifications SAS®"
+      ],
+      "badge": "SAS® Certified Partner"
+    },
+    "custom": {
+      "title": "Formations sur mesure",
+      "subtitle": "Des programmes personnalisés adaptés aux besoins spécifiques de votre organisation.",
+      "features": [
+        "Audit des compétences data",
+        "Programme sur mesure",
+        "Format flexible",
+        "Coaching post-formation",
+        "Cas pratiques sur vos données"
+      ],
+      "badge": "Programme personnalisé"
+    },
+    "cta_title": "Prêt à former vos équipes ?",
+    "cta_subtitle": "Nos experts conçoivent un programme adapté à vos besoins et à votre secteur d'activité.",
+    "cta_button": "Demander un programme de formation →"
+  },
+  "services": {
+  "badge": "Nos expertises",
+  "title": "Des solutions pour chaque défi data",
+  "subtitle": "De la stratégie à l'implémentation, Biware couvre l'ensemble de la chaîne de valeur DATA.",
+  "bi": {
+    "title": "Business Intelligence",
+    "desc": "Tableaux de bord interactifs, rapports automatisés et KPIs en temps réel pour piloter votre activité avec précision."
+  },
+  "risk": {
+    "title": "Risk Management & Fraude",
+    "desc": "Détection des anomalies, scoring de risque et conformité réglementaire pour Finance, Assurance et Télécom."
+  },
+  "customer": {
+    "title": "Customer Intelligence",
+    "desc": "Connaissance client 360°, segmentation avancée et campaign management pour maximiser vos revenus."
+  },
+  "analytics": {
+    "title": "Advanced Analytics & IA",
+    "desc": "Analyse prédictive, modélisation statistique et machine learning appliqués à vos problématiques métier."
+  },
+  "data_mgmt": {
+    "title": "Data Management",
+    "desc": "Architecture data, gouvernance, qualité et intégration de vos sources dans un référentiel unifié et fiable."
+  },
+  "training": {
+    "title": "Formations Power BI & SAS®",
+    "desc": "Montée en compétence de vos équipes sur Power BI et SAS® — programmes sur mesure, certifiants et opérationnels."
+  }
+},
+  "jobs": {
+    "badge": "Carrières",
+    "title": "Donnez un nouvel élan à votre carrière",
+    "subtitle": "Rejoignez une équipe passionnée et innovante au cœur des projets data.",
+    "no_offers": "Aucune offre disponible pour le moment. Revenez bientôt !",
+    "apply": "Postuler",
+    "spontaneous_title": "Vous ne trouvez pas l'offre qui vous correspond ?",
+    "spontaneous_button": "Candidature spontanée →"
+  },
+  "candidature": {
+    "badge": "Candidature",
+    "title": "Candidature spontanée",
+    "subtitle": "Vous ne trouvez pas d'offre correspondant à votre profil ? Postulez spontanément.",
+    "back": "Retour aux offres",
+    "nom": "Nom",
+    "prenom": "Prénom",
+    "email": "Email",
+    "telephone": "Téléphone",
+    "domaine": "Domaine / Poste recherché",
+    "cv": "CV (PDF ou Word)",
+    "cv_click": "Cliquez pour télécharger votre CV",
+    "cv_formats": "Formats acceptés : PDF, DOC, DOCX",
+    "message": "Message de motivation (optionnel)",
+    "message_placeholder": "Parlez-nous de vous, de vos compétences et de vos motivations...",
+    "submit": "Envoyer ma candidature",
+    "sending": "Envoi en cours...",
+    "success_title": "Candidature envoyée !",
+    "success_message": "Merci {prenom} ! Votre candidature spontanée a bien été reçue. Nous vous répondrons dans les plus brefs délais.",
+    "success_button": "Retour à l'accueil",
+    "domaines": {
+      "bi": "Business Intelligence",
+      "data_eng": "Data Engineering",
+      "data_science": "Data Science",
+      "risk": "Risk Management",
+      "customer": "Customer Intelligence",
+      "analytics": "Advanced Analytics",
+      "data_mgmt": "Data Management",
+      "powerbi": "Formation Power BI",
+      "sas": "Formation SAS",
+      "stage": "Stage",
+      "alternance": "Alternance",
+      "autre": "Autre"
+    }
+  },
+  "contact_form": {
+    "title": "Nous contacter",
+    "subtitle": "Une question ? Notre équipe vous répondra sous 24h.",
+    "name": "Nom complet *",
+    "email": "Email *",
+    "message": "Votre message *",
+    "send": "Envoyer le message →",
+    "sending": "Envoi en cours...",
+    "success": "✓ Message envoyé ! Nous vous répondrons rapidement.",
+    "error": "✗ Une erreur est survenue. Veuillez réessayer ou nous contacter directement."
+  },
+  "quote_form": {
+    "title": "Demande de devis",
+    "subtitle": "Remplissez ce formulaire et notre équipe vous contactera sous 24h.",
+    "prenom": "Prénom *",
+    "nom": "Nom *",
+    "email": "Email *",
+    "telephone": "Téléphone *",
+    "societe": "Société / Organisation",
+    "secteur": "Secteur d'activité *",
+    "besoin": "Type de besoin *",
+    "message": "Décrivez votre projet / vos besoins...",
+    "send": "Envoyer ma demande →",
+    "sending": "Envoi en cours...",
+    "success": "✓ Votre demande a bien été envoyée ! Nous vous contacterons rapidement.",
+    "error": "✗ Une erreur est survenue. Veuillez réessayer ou nous contacter directement.",
+    "secteurs": {
+      "bank": "Banque / Finance",
+      "telecom": "Télécommunication",
+      "insurance": "Assurance",
+      "industry": "Industrie",
+      "retail": "Grande distribution",
+      "energy": "Énergie / Utilities",
+      "tech": "Tech / Logiciel",
+      "other": "Autre"
+    },
+    "besoins": {
+      "bi": "Business Intelligence",
+      "risk": "Risk Management & Fraude",
+      "customer": "Customer Intelligence",
+      "analytics": "Advanced Analytics / IA",
+      "data_mgmt": "Data Management",
+      "powerbi": "Formation Power BI",
+      "sas": "Formation SAS®",
+      "synapse": "Solution Synapse HR",
+      "credit": "Solution Credit Squares",
+      "other": "Autre"
+    }
+  },
+  "formation_modal": {
+    "title": "Demande de formation",
+    "subtitle": "Remplissez ce formulaire et notre équipe vous contactera sous 24h pour définir votre programme.",
+    "prenom": "Prénom *",
+    "nom": "Nom *",
+    "email": "Email *",
+    "telephone": "Téléphone *",
+    "type_formation": "Type de formation *",
+    "message": "Message / Commentaires",
+    "message_placeholder": "Précisez vos besoins, le nombre de participants, vos disponibilités, vos objectifs spécifiques...",
+    "send": "Envoyer ma demande →",
+    "sending": "Envoi en cours...",
+    "success": "✓ Votre demande a bien été envoyée ! Un expert vous contactera sous 24h.",
+    "error": "✗ Une erreur est survenue. Veuillez réessayer ou nous contacter directement.",
+    "types": {
+      "powerbi": "Formation Power BI",
+      "sas": "Formation SAS®",
+      "custom": "Formation sur mesure"
+    }
+  },
+  "cta": {
+    "title": "Prêt à valoriser votre DATA ?",
+    "subtitle": "Contactez nos experts pour une démonstration personnalisée de nos solutions ou un programme de formation adapté à vos équipes.",
+    "btn_devis": "Demander un devis →",
+    "btn_contact": "Nous contacter"
+  },
+  "footer": {
+    "address": "Rue du Lac Windermere, Résidence ERRAWDHA, 1053 Les Berges du Lac, Tunis – Tunisie",
+    "phone": "+216 29 969 439",
+    "email": "contact@biware-consulting.com",
+    "website": "biware-consulting.com",
+    "legal": "Mentions légales",
+    "privacy": "Confidentialité",
+    "company_name": "Biware"
+  },
+  "ticker": {
+    "items": [
+      "Business Intelligence",
+      "Risk Management",
+      "Customer Intelligence",
+      "Advanced Analytics",
+      "Data Management",
+      "Formations Power BI & SAS",
+      "Synapse HR",
+      "Credit Squares"
+    ]
+  }
+}

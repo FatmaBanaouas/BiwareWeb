@@ -34,7 +34,7 @@
             min-height: 100vh;
         }
 
-        /* Noise overlay */
+  
         body::before {
             content: '';
             position: fixed;
@@ -45,7 +45,7 @@
             opacity: 0.35;
         }
 
-        /* ── Layout ── */
+    
         .layout {
             display: grid;
             grid-template-columns: 240px 1fr;
@@ -54,7 +54,7 @@
             z-index: 1;
         }
 
-        /* ── Sidebar ── */
+       
         .sidebar {
             background: rgba(255,255,255,0.015);
             border-right: 1px solid var(--border);
@@ -142,13 +142,13 @@
             box-shadow: 0 0 6px var(--green);
         }
 
-        /* ── Main ── */
+    
         .main {
             padding: 2.5rem 3rem;
             overflow-y: auto;
         }
 
-        /* ── Page header ── */
+  
         .page-header {
             margin-bottom: 2.5rem;
             display: flex;
@@ -196,7 +196,7 @@
             font-weight: 400;
         }
 
-        /* ── Two-col layout ── */
+     
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -204,7 +204,7 @@
             align-items: start;
         }
 
-        /* ── Cards ── */
+   
         .card {
             background: var(--card);
             border: 1px solid var(--border);
@@ -232,7 +232,6 @@
             border-radius: 2px;
         }
 
-        /* ── Form elements ── */
         .form-group { margin-bottom: 1.1rem; }
 
         .form-row {
@@ -289,7 +288,7 @@
             margin-top: 0.3rem;
         }
 
-        /* ── Buttons ── */
+   
         .btn {
             display: inline-flex;
             align-items: center;
@@ -337,7 +336,7 @@
 
         .btn-danger:hover { background: rgba(220,38,38,0.22); }
 
-        /* ── Alert messages ── */
+       
         .alert {
             padding: 0.75rem 1rem;
             border-radius: 10px;
@@ -364,7 +363,7 @@
             gap: 0.5rem;
         }
 
-        /* ── Preview ── */
+    
         .preview-box {
             background: rgba(255,255,255,0.015);
             border: 1px solid var(--faint);
@@ -478,7 +477,7 @@
             animation: spin 0.7s linear infinite;
         }
 
-        /* ── Info banner ── */
+      
         .info-banner {
             background: var(--orange-dim);
             border: 1px solid var(--orange-border);
@@ -492,7 +491,6 @@
             gap: 0.6rem;
         }
 
-        /* scrollbar */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(242,101,34,0.3); border-radius: 3px; }
@@ -502,7 +500,7 @@
 
 <div class="layout">
 
-    <!-- ── Sidebar ── -->
+
     <aside class="sidebar">
         <div class="sidebar-logo">
             <div class="sidebar-logo-sub">Admin Panel</div>
@@ -537,10 +535,10 @@
         </div>
     </aside>
 
-    <!-- ── Main ── -->
+  
     <main class="main">
 
-        <!-- Page header -->
+     
         <div class="page-header">
             <div>
                 <div class="page-badge"><span></span>Gestion RH</div>
@@ -565,10 +563,10 @@
             Les offres publiées apparaissent immédiatement dans la section Carrières du site.
         </div>
 
-        <!-- Two-col grid -->
+     
         <div class="content-grid">
 
-            <!-- ── Formulaire ── -->
+          
             <div class="card">
                 <div class="card-title">Nouvelle offre</div>
 
@@ -635,7 +633,7 @@
                     <div id="message" class="alert"></div>
                 </form>
 
-                <!-- Aperçu -->
+             
                 <div class="preview-box" id="preview">
                     <div class="preview-label">Aperçu</div>
                     <div class="preview-title" id="prevTitle">—</div>
@@ -644,7 +642,7 @@
                 </div>
             </div>
 
-            <!-- ── Liste des offres ── -->
+           
             <div class="card">
                 <div class="jobs-header">
                     <div class="card-title" style="margin-bottom:0;">Offres publiées</div>
@@ -692,7 +690,7 @@
         document.getElementById('prevDesc').textContent  = desc || '';
     }
 
-    // ── Soumission du formulaire ──
+   
     document.getElementById('jobForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -745,7 +743,6 @@
         }
     });
 
-    // ── Chargement des offres ──
     async function loadJobs() {
         const container = document.getElementById('jobsList');
         container.innerHTML = `<div class="loading-state"><div class="spinner"></div> Chargement...</div>`;
@@ -791,7 +788,7 @@
         }
     }
 
-    // ── Suppression ──
+   
     async function deleteJob(id, title) {
         if (!confirm(`Supprimer "${title}" ?`)) return;
         try {
@@ -802,7 +799,7 @@
         } catch { alert('Erreur de connexion.'); }
     }
 
-    // ── Helpers ──
+   
     function showAlert(el, type, msg) {
         el.className = `alert ${type}`;
         el.innerHTML = type === 'success'
@@ -817,7 +814,7 @@
         return d.innerHTML;
     }
 
-    // Init
+  
     loadJobs();
 </script>
 </body>

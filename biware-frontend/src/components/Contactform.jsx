@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 
 export default function ContactForm({ onClose, isOpen }) {
+  const { t } = useTranslation();
   const [form, setForm] = useState({ nom: '', email: '', message: '' })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -70,7 +72,6 @@ export default function ContactForm({ onClose, isOpen }) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           style={{
@@ -108,21 +109,21 @@ export default function ContactForm({ onClose, isOpen }) {
           marginBottom: '0.5rem',
           letterSpacing: '-0.02em',
         }}>
-          Nous <span style={{ color: 'var(--bw-orange)' }}>contacter</span>
+          {t('contact_form.title')}
         </h2>
         <p style={{
           color: 'rgba(255,255,255,0.4)',
           fontSize: '0.9rem',
           marginBottom: '2rem',
         }}>
-          Une question ? Notre équipe vous répondra sous 24h.
+          {t('contact_form.subtitle')}
         </p>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <input
             type="text"
             name="nom"
-            placeholder="Nom complet *"
+            placeholder={t('contact_form.name')}
             value={form.nom}
             onChange={handleChange}
             required
@@ -132,7 +133,7 @@ export default function ContactForm({ onClose, isOpen }) {
           <input
             type="email"
             name="email"
-            placeholder="Email *"
+            placeholder={t('contact_form.email')}
             value={form.email}
             onChange={handleChange}
             required
@@ -141,7 +142,7 @@ export default function ContactForm({ onClose, isOpen }) {
 
           <textarea
             name="message"
-            placeholder="Votre message *"
+            placeholder={t('contact_form.message')}
             rows="5"
             value={form.message}
             onChange={handleChange}
@@ -160,7 +161,7 @@ export default function ContactForm({ onClose, isOpen }) {
               marginTop: '0.5rem',
             }}
           >
-            {loading ? 'Envoi en cours...' : 'Envoyer le message →'}
+            {loading ? t('contact_form.sending') : t('contact_form.send')}
           </button>
 
           {success && (
@@ -172,7 +173,7 @@ export default function ContactForm({ onClose, isOpen }) {
               borderRadius: 8,
               marginTop: '1rem',
             }}>
-              ✓ Message envoyé ! Nous vous répondrons rapidement.
+              {t('contact_form.success')}
             </p>
           )}
 
@@ -185,7 +186,7 @@ export default function ContactForm({ onClose, isOpen }) {
               borderRadius: 8,
               marginTop: '1rem',
             }}>
-              ✗ Une erreur est survenue. Veuillez réessayer ou nous contacter directement.
+              {t('contact_form.error')}
             </p>
           )}
         </form>

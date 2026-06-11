@@ -1,4 +1,3 @@
-
 import smtplib
 import os
 from email.mime.multipart import MIMEMultipart
@@ -34,7 +33,7 @@ Message :
         """
         msg.attach(MIMEText(corps, "plain"))
 
-        # Attacher le CV
+  
         piece = MIMEBase("application", "octet-stream")
         piece.set_payload(cv_bytes)
         encoders.encode_base64(piece)
@@ -78,7 +77,7 @@ Besoin      : {besoin}
 MESSAGE
 {message or 'Aucun message complémentaire.'}
 
----
+
 À contacter sous 24h.
 Biware Consulting · contact@biware-consulting.com · +216 36 361 801
 """
@@ -114,14 +113,14 @@ Nous accusons bonne réception de votre demande de devis.
 Un de nos experts vous contactera dans les plus brefs délais (sous 24h ouvrées) pour échanger sur votre projet.
 
 En attendant, n'hésitez pas à visiter notre site pour découvrir nos solutions :
-🌐 https://biware-consulting.com
+https://biware-consulting.com
 
 Cordialement,
 L'équipe Biware Consulting
----
-📧 contact@biware-consulting.com
-📞 +216 29 969 439
-📍 Rue du Lac Windermere , Résidence ERRAWDHA, Escalier 03, 03ème étage,1053 Les Berges du Lac, Tunis – Tunisie
+
+contact@biware-consulting.com
++216 29 969 439
+Rue du Lac Windermere , Résidence ERRAWDHA, Escalier 03, 03ème étage,1053 Les Berges du Lac, Tunis – Tunisie
 """
         msg.attach(MIMEText(corps, "plain"))
 
@@ -138,7 +137,7 @@ L'équipe Biware Consulting
         print(f"Erreur envoi confirmation client : {e}")
         return False
 
-# À ajouter dans service_mail.py
+
 
 def envoyer_demande_formation(
     prenom: str, 
@@ -183,8 +182,8 @@ MESSAGE DU CANDIDAT
 • Envoyer un devis détaillé
 
 Biware Consulting
-📧 contact@biware-consulting.com
-📞 +216 29 969 439
+contact@biware-consulting.com
++216 29 969 439
 
 """
         msg.attach(MIMEText(corps, "plain", "utf-8"))
@@ -201,7 +200,7 @@ Biware Consulting
         return True
 
     except Exception as e:
-        print(f"❌ Erreur envoi demande formation : {e}")
+        print(f"Erreur envoi demande formation : {e}")
         return False
 
 
@@ -213,7 +212,7 @@ def envoyer_confirmation_formation_client(prenom, nom, email_client, formation_s
         msg["To"] = email_client
         msg["Subject"] = "Biware Consulting - Confirmation de votre demande de formation"
 
-        # Déterminer l'emoji et le message personnalisé en fonction de la formation
+     
         if "Power BI" in formation_souhaitee:
             message_specifique = "Notre expert Power BI vous contactera pour définir le programme adapté à vos besoins en data visualisation."
             lien_guide = "https://biware-consulting.com/guides/power-bi"
@@ -247,10 +246,10 @@ Contactez-nous directement au +216 29 969 439
 
 Cordialement,
 L'équipe Biware Consulting
----
-🌐 https://biware-consulting.com
-📧 formation@biware-consulting.com
-📍 Rue du Lac Windermere , Résidence ERRAWDHA, Escalier 03, 03ème étage,1053 Les Berges du Lac, Tunis – Tunisie
+
+https://biware-consulting.com
+formation@biware-consulting.com
+Rue du Lac Windermere , Résidence ERRAWDHA, Escalier 03, 03ème étage,1053 Les Berges du Lac, Tunis – Tunisie
 """
         msg.attach(MIMEText(corps, "plain", "utf-8"))
 
@@ -261,11 +260,11 @@ L'équipe Biware Consulting
             serveur.login(SMTP_USER, SMTP_PASSWORD)
             serveur.sendmail(SMTP_USER, email_client, msg.as_string())
 
-        print(f"✓ Email de confirmation envoyé à {email_client}")
+        print(f"Email de confirmation envoyé à {email_client}")
         return True
 
     except Exception as e:
-        print(f"❌ Erreur envoi confirmation formation client : {e}")
+        print(f"Erreur envoi confirmation formation client : {e}")
         return False
 
 def envoyer_contact(nom: str, email: str, message: str):
@@ -286,7 +285,7 @@ Email   : {email}
 MESSAGE
 {message}
 
----
+
 À traiter sous 24h.
 Biware Consulting · contact@biware-consulting.com · +216 36 361 801
 """
@@ -310,14 +309,14 @@ Biware Consulting · contact@biware-consulting.com · +216 36 361 801
 Nous avons bien reçu votre message et vous répondrons sous 24h ouvrées.
 
 Besoin d'une réponse immédiate ?
-📞 +216 29 969 439
-📧 contact@biware-consulting.com
++216 29 969 439
+contact@biware-consulting.com
 
 Cordialement,
 L'équipe Biware Consulting
----
-🌐 https://biware-consulting.com
-📍 Rue du Lac Windermere, Résidence ERRAWDHA, Escalier 03, 3ème étage, 1053 Les Berges du Lac, Tunis – Tunisie
+
+https://biware-consulting.com
+Rue du Lac Windermere, Résidence ERRAWDHA, Escalier 03, 3ème étage, 1053 Les Berges du Lac, Tunis – Tunisie
 """
         confirm.attach(MIMEText(corps_confirm, "plain", "utf-8"))
 

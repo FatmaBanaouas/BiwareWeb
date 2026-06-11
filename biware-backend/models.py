@@ -1,4 +1,4 @@
-# models.py
+
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, Text, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -52,5 +52,5 @@ class JobOffer(Base):
             'benefits': json.loads(self.benefits) if self.benefits else []
         }
 
-# Créer les tables
+
 Base.metadata.create_all(bind=engine)
